@@ -260,7 +260,7 @@ class GUI final {
 
     void shellReached();
     std::string buildSaveStateFilename(int i);
-    void loadSaveState(const std::filesystem::path& filename);
+    void loadSaveState(const std::filesystem::path &filename);
 
     void applyTheme(int theme);
     void cherryTheme();

@@ -512,20 +512,20 @@ void PCSX::GUI::startFrame() {
     if (ImGui::IsKeyPressed(GLFW_KEY_ESCAPE)) m_showMenu = !m_showMenu;
     if (io.KeyAlt && ImGui::IsKeyPressed(GLFW_KEY_ENTER)) setFullscreen(!m_fullscreen);
 
-    if (ImGui::IsKeyPressed(GLFW_KEY_F1)) { // Save to quick-save slot
+    if (ImGui::IsKeyPressed(GLFW_KEY_F1)) {  // Save to quick-save slot
         zstr::ofstream save(buildSaveStateFilename(0), std::ios::binary);
         save << SaveStates::save();
     }
 
-    if (ImGui::IsKeyPressed(GLFW_KEY_F2)) { // Load from quick-save slot
+    if (ImGui::IsKeyPressed(GLFW_KEY_F2)) {  // Load from quick-save slot
         const auto saveStateName = buildSaveStateFilename(0);
         loadSaveState(saveStateName);
     }
 
-    if (ImGui::IsKeyPressed(GLFW_KEY_F3)) g_system->start(); // Start system
-    if (ImGui::IsKeyPressed(GLFW_KEY_PAUSE) || ImGui::IsKeyPressed(GLFW_KEY_F4)) g_system->pause(); // Pause system
-    if (ImGui::IsKeyPressed(GLFW_KEY_F5)) g_system->softReset(); // Soft reset
-    if (ImGui::IsKeyPressed(GLFW_KEY_F6)) g_system->hardReset(); // Hard reset
+    if (ImGui::IsKeyPressed(GLFW_KEY_F3)) g_system->start();                                         // Start system
+    if (ImGui::IsKeyPressed(GLFW_KEY_PAUSE) || ImGui::IsKeyPressed(GLFW_KEY_F4)) g_system->pause();  // Pause system
+    if (ImGui::IsKeyPressed(GLFW_KEY_F5)) g_system->softReset();                                     // Soft reset
+    if (ImGui::IsKeyPressed(GLFW_KEY_F6)) g_system->hardReset();                                     // Hard reset
 }
 
 void PCSX::GUI::setViewport() { glViewport(0, 0, m_renderSize.x, m_renderSize.y); }
@@ -1409,8 +1409,8 @@ void PCSX::GUI::interruptsScaler() {
 }
 
 bool PCSX::GUI::showThemes() {
-    static const char* imgui_themes[] = {"Default", "Classic", "Light",
-                                          "Cherry",  "Mono", "Dracula", "Olive"};  // Used for theme combo box
+    static const char* imgui_themes[] = {"Default", "Classic", "Light", "Cherry",
+                                         "Mono",    "Dracula", "Olive"};  // Used for theme combo box
     auto changed = false;
     auto& currentTheme = g_emulator->settings.get<Emulator::SettingGUITheme>().value;
 
@@ -1549,8 +1549,8 @@ std::string PCSX::GUI::buildSaveStateFilename(int i) {
     }
 }
 
-void PCSX::GUI::loadSaveState (const std::filesystem::path& filename) {
-    if (!std::filesystem::exists(std::filesystem::path(filename))) return; // Return if the savestate doesn't exist
+void PCSX::GUI::loadSaveState(const std::filesystem::path& filename) {
+    if (!std::filesystem::exists(std::filesystem::path(filename))) return;  // Return if the savestate doesn't exist
 
     zstr::ifstream save(filename.string(), std::ios::binary);
     std::ostringstream os;
@@ -1561,9 +1561,9 @@ void PCSX::GUI::loadSaveState (const std::filesystem::path& filename) {
         save.read(buff, buff_size);
         std::streamsize cnt = save.gcount();
         if (cnt == 0) break;
-         os.write(buff, cnt);
+        os.write(buff, cnt);
     }
-                    
+
     delete[] buff;
     SaveStates::load(os.str());
 };
